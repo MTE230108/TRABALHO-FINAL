@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela com Filtro, Adição e Deleção</title>
+    <title>Jogos
+    </title>
+    <style>
+          body {
+            
+            font-family: Arial, Helvetica, sans-serif;
+            background-color:antiquewhite;
+          
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+        }
+        th, td {
+            border: 2px solid #000000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #ffffff;
+        }
+        #searchInput {
+            margin-bottom: 12px;
+            padding: 8px;
+            width: 80%;
+            background-color: #000;
+            border: 1px solid white;
+            color: white;
+            border-radius:5%
+        }
+        #addRowButton, #deleteRowButton {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #000;
+            border: 1px solid white;
+            color: white;
+            border-radius:10%
+            
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .form-container input {
+            margin-right: 10px;
+            padding: 8px;
+            background-color: black;
+            color: white;
+        }
+        .form-container button {
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <input type="text" id="nameInput" placeholder="Nome">
+        <input type="number" id="ageInput" placeholder="Idade">
+        <input type="text" id="preçoInput" placeholder="Preço">
+        <input type="text" id="AlugadoInput" placeholder="Alugado">
+        <button id="addRowButton">Adicionar</button>
+        <button id="deleteRowButton">Deletar Selecionado</button>
+    </div>
+
+    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Pesquisar...">
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>preço</th>
+                <th>alugados</th>
+                <th>Celecionados</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        var selectedRow = null;
+
+        function filterTable() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        document.getElementById("addRowButton").addEventListener("click", function() {
+            var name = document.getElementById("nameInput").value;
+            var age = document.getElementById("ageInput").value;
+            var preco = document.getElementById("preçoInput").value;
+            var alugado = document.getElementById("AlugadoInput").value;
+            
+            
+            if (name && age && preco) {
+                var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+                var newRow = table.insertRow();
+                
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+                
+                cell1.textContent = name;
+                cell2.textContent = age;
+                cell3.textContent = preco;
+                cell4.textContent = alugado;
+                cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+                
+                document.getElementById("nameInput").value = "";
+                document.getElementById("ageInput").value = "";
+                document.getElementById("preçoInput").value = "";
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        });
+
+        document.getElementById("deleteRowButton").addEventListener("click", function() {
+            if (selectedRow) {
+                selectedRow.parentNode.removeChild(selectedRow);
+                selectedRow = null;
+            } else {
+                alert("Nenhuma linha selecionada para deletar.");
+            }
+        });
+
+        function selectRow(button) {
+            // Desmarcar a linha previamente selecionada
+            if (selectedRow) {
+                selectedRow.style.backgroundColor = "";
+            }
+            
+            // Marcar a nova linha selecionada
+            var row = button.parentNode.parentNode;
+            row.style.backgroundColor = "#f4f4f4";
+            selectedRow = row;
+        }
+    </script>
+</body>
+</html>
+
