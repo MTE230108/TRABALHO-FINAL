@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabela com Filtro, Adição e Deleção</title>
-
-          body {
-            
+    <title>Tabela com Filtro, Adição, Deleção e Edição</title>
+    <style>
+        body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color:antiquewhite;
-          
-
+            background-color: antiquewhite;
         }
 
         table {
@@ -34,9 +31,9 @@
             background-color: #000;
             border: 1px solid white;
             color: white;
-            border-radius:5%
+            border-radius: 5%
         }
-        #addRowButton, #deleteRowButton {
+        #addRowButton, #deleteRowButton, #editRowButton {
             margin-top: 10px;
             padding: 8px 16px;
             font-size: 16px;
@@ -44,8 +41,7 @@
             background-color: #000;
             border: 1px solid white;
             color: white;
-            border-radius:10%
-            
+            border-radius: 10%
         }
         .form-container {
             margin-bottom: 20px;
@@ -70,6 +66,7 @@
         <input type="text" id="AlugadoInput" placeholder="Alugado">
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
+        <button id="editRowButton">Editar Selecionado</button>
     </div>
 
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Pesquisar...">
@@ -79,10 +76,9 @@
             <tr>
                 <th>Nome</th>
                 <th>Idade</th>
-                <th>preço</th>
-                <th>alugados</th>
-                <th>Celecionados</th>
-                
+                <th>Preço</th>
+                <th>Alugado</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -120,7 +116,6 @@
             var preco = document.getElementById("preçoInput").value;
             var alugado = document.getElementById("AlugadoInput").value;
             
-            
             if (name && age && preco) {
                 var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
@@ -140,6 +135,7 @@
                 document.getElementById("nameInput").value = "";
                 document.getElementById("ageInput").value = "";
                 document.getElementById("preçoInput").value = "";
+                document.getElementById("AlugadoInput").value = "";
             } else {
                 alert("Por favor, preencha todos os campos.");
             }
@@ -154,6 +150,26 @@
             }
         });
 
+        document.getElementById("editRowButton").addEventListener("click", function() {
+            if (selectedRow) {
+                var name = document.getElementById("nameInput").value;
+                var age = document.getElementById("ageInput").value;
+                var preco = document.getElementById("preçoInput").value;
+                var alugado = document.getElementById("AlugadoInput").value;
+
+                if (name && age && preco) {
+                    selectedRow.cells[0].textContent = name;
+                    selectedRow.cells[1].textContent = age;
+                    selectedRow.cells[2].textContent = preco;
+                    selectedRow.cells[3].textContent = alugado;
+                } else {
+                    alert("Por favor, preencha todos os campos.");
+                }
+            } else {
+                alert("Nenhuma linha selecionada para editar.");
+            }
+        });
+
         function selectRow(button) {
             // Desmarcar a linha previamente selecionada
             if (selectedRow) {
@@ -164,8 +180,13 @@
             var row = button.parentNode.parentNode;
             row.style.backgroundColor = "#f4f4f4";
             selectedRow = row;
+
+            // Preencher os campos do formulário com os dados da linha selecionada
+            document.getElementById("nameInput").value = row.cells[0].textContent;
+            document.getElementById("ageInput").value = row.cells[1].textContent;
+            document.getElementById("preçoInput").value = row.cells[2].textContent;
+            document.getElementById("AlugadoInput").value = row.cells[3].textContent;
         }
     </script>
 </body>
 </html>
-
