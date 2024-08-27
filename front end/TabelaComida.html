@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabela JOGOS</title>
+    <title>Tabela Comidas</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -61,9 +61,9 @@
 <body>
     <div class="form-container">
         <input type="text" id="nameInput" placeholder="Nome">
-        <input type="number" id="ageInput" placeholder="Idade">
+        <input type="text" id="ValidadeInput" placeholder="Validade">
         <input type="text" id="preçoInput" placeholder="Preço">
-        <input type="text" id="AlugadoInput" placeholder="Alugado">
+        <input type="text" id="QuantidadeInput" placeholder="Quantidade">
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
@@ -75,9 +75,9 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Idade</th>
+                <th>Validade</th>
                 <th>Preço</th>
-                <th>Alugado</th>
+                <th>Quantidade</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -112,11 +112,11 @@
 
         document.getElementById("addRowButton").addEventListener("click", function() {
             var name = document.getElementById("nameInput").value;
-            var age = document.getElementById("ageInput").value;
+            var Validade = document.getElementById("ValidadeInput").value;
             var preco = document.getElementById("preçoInput").value;
-            var alugado = document.getElementById("AlugadoInput").value;
+            var Quantidade = document.getElementById("QuantidadeInput").value;
             
-            if (name && age && preco) {
+            if (name && Validade && preco) {
                 var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
                 
@@ -127,15 +127,15 @@
                 var cell5 = newRow.insertCell(4);
                 
                 cell1.textContent = name;
-                cell2.textContent = age;
+                cell2.textContent = Validade;
                 cell3.textContent = preco;
-                cell4.textContent = alugado;
+                cell4.textContent = Quantidade;
                 cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
                 
                 document.getElementById("nameInput").value = "";
-                document.getElementById("ageInput").value = "";
+                document.getElementById("ValidadeInput").value = "";
                 document.getElementById("preçoInput").value = "";
-                document.getElementById("AlugadoInput").value = "";
+                document.getElementById("QuantidadeInput").value = "";
             } else {
                 alert("Por favor, preencha todos os campos.");
             }
@@ -153,15 +153,15 @@
         document.getElementById("editRowButton").addEventListener("click", function() {
             if (selectedRow) {
                 var name = document.getElementById("nameInput").value;
-                var age = document.getElementById("ageInput").value;
+                var age = document.getElementById("ValidadeInput").value;
                 var preco = document.getElementById("preçoInput").value;
-                var alugado = document.getElementById("AlugadoInput").value;
+                var alugado = document.getElementById("QuantidadeInput").value;
 
                 if (name && age && preco) {
                     selectedRow.cells[0].textContent = name;
-                    selectedRow.cells[1].textContent = age;
+                    selectedRow.cells[1].textContent = Validade;
                     selectedRow.cells[2].textContent = preco;
-                    selectedRow.cells[3].textContent = alugado;
+                    selectedRow.cells[3].textContent = Quantidade;
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
@@ -183,9 +183,9 @@
 
             // Preencher os campos do formulário com os dados da linha selecionada
             document.getElementById("nameInput").value = row.cells[0].textContent;
-            document.getElementById("ageInput").value = row.cells[1].textContent;
+            document.getElementById("ValidadeInput").value = row.cells[1].textContent;
             document.getElementById("preçoInput").value = row.cells[2].textContent;
-            document.getElementById("AlugadoInput").value = row.cells[3].textContent;
+            document.getElementById("QuantidadeInput").value = row.cells[3].textContent;
         }
     </script>
 </body>
