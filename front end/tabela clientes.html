@@ -52,25 +52,22 @@
             background-color: black;
             color: white;
         }
-        .form-container button {
+        .form-container button, .form-container #back-to-menu-button {
             padding: 8px 16px;
             font-size: 16px;
         }
-        .back-to-menu-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #000;
+        #back-to-menu-button {
+            padding: 10px;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            width: 1%;
         }
-        .back-to-menu-button:hover {
-            background-color: #333;
+        #back-to-menu-button:hover {
+            background-color: #999;
         }
+
     </style>
 </head>
 <body>
@@ -83,6 +80,7 @@
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
+        <img src="casa.png" id="back-to-menu-button" onclick="goToMenu()">
     </div>
 
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Pesquisar...">
@@ -101,8 +99,6 @@
         <tbody>
         </tbody>
     </table>
-
-    <button class="back-to-menu-button" onclick="goToMenu()">Voltar ao Menu</button>
 
     <script>
         var selectedRow = null;
@@ -218,6 +214,7 @@
         function goToMenu() {
             window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
+        
     </script>
 </body>
 </html>
