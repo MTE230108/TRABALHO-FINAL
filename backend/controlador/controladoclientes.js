@@ -1,4 +1,4 @@
-const Cliente = require('../modelo/clientes');
+const Cliente = require('../modelo/cliente');
 
 const ClienteController = {
     createCliente: async (req, res) => {
@@ -57,11 +57,16 @@ const ClienteController = {
         }
     }, login:async(req, res) => {
         try{
-            const clientes = await clientes.findByPk(req.params.id);
-            if(aluno.email == req.body.email && aluno.senha == req.body.senha){
+            const cliente = await Cliente.findOne({where: {email: req.body.email}});
+            if(!cliente){
+                res.status(404).send('Não achei o cliente');
+            }
+            console.log(cliente)
+
+            if(cliente.email == req.body.email && cliente.senha == req.body.senha){
                 return restore.status(200).send('cliente logado com sucesso');
             }else{
-                res.send('E-mail ou senha incorreto');
+                res.status(400).send('E-mail ou senha incorreto');
             }
         } catch(error){
             res.status(500).send(error.message);

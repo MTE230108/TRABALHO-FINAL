@@ -27,7 +27,7 @@ const sequelize = require("../config/database");
         
     } , {
         sequelize,
-        modelname: 'produtos',
+        modelname: 'jogos',
         timestamps: false
 
      })

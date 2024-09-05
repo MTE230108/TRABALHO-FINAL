@@ -1,21 +1,24 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require("../config/database");
 
-class Clientes extends Model { }
-Clientes.init({
-    id_clientes: {
+class Cliente extends Model { }
+Cliente.init({
+    id_cliente: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
 
     },
-    nome_clientes: {
+    nome: {
         type: DataTypes.INTEGER
+    },
+    email: {
+        type: DataTypes.STRING
     },
     telefone: {
         type: DataTypes.STRING
     },
-    endereço: {
+    endereco: {
         type: DataTypes.STRING
     },
     cpf: {
@@ -24,13 +27,10 @@ Clientes.init({
    hora_de_jogo: {
         type: DataTypes.DECIMAL
     }
-
-
-
 }, {
     sequelize,
-    modelname: 'clientes',
+    modelName: 'clientes',
     timestamps: false 
 })
 
-module.exports = Clientes 
+module.exports = Cliente 

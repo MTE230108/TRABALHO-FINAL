@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // Configuração do banco de dados
-const dbName = 'produtosbb';
+const dbName = 'backend';
 const dbUser = 'root';
 const dbPassword = '';
 const dbHost = 'localhost';

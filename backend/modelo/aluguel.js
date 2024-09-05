@@ -21,7 +21,7 @@ const sequelize = require("../config/database");
         
     } , {
         sequelize,
-        modelname: 'produtos',
+        modelname: 'aluguel',
         timestamps: false
 
      })
