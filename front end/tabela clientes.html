@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabela JOGOS</title>
+    <title>Tabela Clientes</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -56,10 +56,20 @@
             padding: 8px 16px;
             font-size: 16px;
         }
-        #timerInput {
-            margin-right: 10px;
-            padding: 8px;
-            width: 100px;
+        .back-to-menu-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-to-menu-button:hover {
+            background-color: #333;
         }
     </style>
 </head>
@@ -67,9 +77,9 @@
     <div class="form-container">
         <input type="text" id="nameInput" placeholder="Nome">
         <input type="number" id="ageInput" placeholder="Idade">
-        <input type="text" id="preçoInput" placeholder="Preço">
-        <input type="text" id="AlugadoInput" placeholder="Alugado">
-        <input type="number" id="timerInput" placeholder="Minutos" min="1" max="60">
+        <input type="text" id="jogoInput" placeholder="Jogo">
+        <input type="text" id="AlugandoInput" placeholder="Alugando">
+        <input type="text" id="phoneInput" placeholder="Telefone"> <!-- Novo campo -->
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
@@ -82,9 +92,9 @@
             <tr>
                 <th>Nome</th>
                 <th>Idade</th>
-                <th>Preço</th>
-                <th>Alugado</th>
-                <th>Temporizador</th>
+                <th>Jogo</th>
+                <th>Alugando</th>
+                <th>Telefone</th> <!-- Nova coluna -->
                 <th>Ações</th>
             </tr>
         </thead>
@@ -92,9 +102,10 @@
         </tbody>
     </table>
 
+    <button class="back-to-menu-button" onclick="goToMenu()">Voltar ao Menu</button>
+
     <script>
         var selectedRow = null;
-        var timers = {}; // Objeto para armazenar temporizadores
 
         function filterTable() {
             var input, filter, table, tr, td, i, j, txtValue;
@@ -121,38 +132,34 @@
         document.getElementById("addRowButton").addEventListener("click", function() {
             var name = document.getElementById("nameInput").value;
             var age = document.getElementById("ageInput").value;
-            var preco = document.getElementById("preçoInput").value;
-            var alugado = document.getElementById("AlugadoInput").value;
-            var timer = document.getElementById("timerInput").value;
+            var jogo = document.getElementById("jogoInput").value;
+            var alugando = document.getElementById("AlugandoInput").value;
+            var phone = document.getElementById("phoneInput").value; // Novo campo
 
-            if (name && age && preco) {
+            if (name && age && jogo && alugando && phone) { // Verifica todos os campos
                 var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
-
+                
                 var cell1 = newRow.insertCell(0);
                 var cell2 = newRow.insertCell(1);
                 var cell3 = newRow.insertCell(2);
                 var cell4 = newRow.insertCell(3);
-                var cell5 = newRow.insertCell(4);
-                var cell6 = newRow.insertCell(5);
-
+                var cell5 = newRow.insertCell(4); // Nova célula
+                var cell6 = newRow.insertCell(5); // Célula para ações
+                
                 cell1.textContent = name;
                 cell2.textContent = age;
-                cell3.textContent = preco;
-                cell4.textContent = alugado;
-                cell5.textContent = timer ? `${timer} min` : "N/A";
+                cell3.textContent = jogo;
+                cell4.textContent = alugando;
+                cell5.textContent = phone; // Novo campo
+
                 cell6.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-
-                // Adiciona temporizador se houver
-                if (timer) {
-                    startTimer(newRow, timer);
-                }
-
+                
                 document.getElementById("nameInput").value = "";
                 document.getElementById("ageInput").value = "";
-                document.getElementById("preçoInput").value = "";
-                document.getElementById("AlugadoInput").value = "";
-                document.getElementById("timerInput").value = "";
+                document.getElementById("jogoInput").value = "";
+                document.getElementById("AlugandoInput").value = "";
+                document.getElementById("phoneInput").value = ""; // Limpar o novo campo
             } else {
                 alert("Por favor, preencha todos os campos.");
             }
@@ -160,9 +167,6 @@
 
         document.getElementById("deleteRowButton").addEventListener("click", function() {
             if (selectedRow) {
-                // Limpar temporizador se houver
-                clearInterval(timers[selectedRow.rowIndex]);
-
                 selectedRow.parentNode.removeChild(selectedRow);
                 selectedRow = null;
             } else {
@@ -174,22 +178,16 @@
             if (selectedRow) {
                 var name = document.getElementById("nameInput").value;
                 var age = document.getElementById("ageInput").value;
-                var preco = document.getElementById("preçoInput").value;
-                var alugado = document.getElementById("AlugadoInput").value;
-                var timer = document.getElementById("timerInput").value;
+                var jogo = document.getElementById("jogoInput").value;
+                var alugando = document.getElementById("AlugandoInput").value;
+                var phone = document.getElementById("phoneInput").value; // Novo campo
 
-                if (name && age && preco) {
+                if (name && age && jogo && alugando && phone) { // Verifica todos os campos
                     selectedRow.cells[0].textContent = name;
                     selectedRow.cells[1].textContent = age;
-                    selectedRow.cells[2].textContent = preco;
-                    selectedRow.cells[3].textContent = alugado;
-                    selectedRow.cells[4].textContent = timer ? `${timer} min` : "N/A";
-
-                    // Atualizar temporizador
-                    clearInterval(timers[selectedRow.rowIndex]);
-                    if (timer) {
-                        startTimer(selectedRow, timer);
-                    }
+                    selectedRow.cells[2].textContent = jogo;
+                    selectedRow.cells[3].textContent = alugando;
+                    selectedRow.cells[4].textContent = phone; // Atualiza o novo campo
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
@@ -203,7 +201,7 @@
             if (selectedRow) {
                 selectedRow.style.backgroundColor = "";
             }
-
+            
             // Marcar a nova linha selecionada
             var row = button.parentNode.parentNode;
             row.style.backgroundColor = "#f4f4f4";
@@ -212,27 +210,13 @@
             // Preencher os campos do formulário com os dados da linha selecionada
             document.getElementById("nameInput").value = row.cells[0].textContent;
             document.getElementById("ageInput").value = row.cells[1].textContent;
-            document.getElementById("preçoInput").value = row.cells[2].textContent;
-            document.getElementById("AlugadoInput").value = row.cells[3].textContent;
-            document.getElementById("timerInput").value = row.cells[4].textContent.replace(' min', '');
+            document.getElementById("jogoInput").value = row.cells[2].textContent;
+            document.getElementById("AlugandoInput").value = row.cells[3].textContent;
+            document.getElementById("phoneInput").value = row.cells[4].textContent; // Novo campo
         }
 
-        function startTimer(row, minutes) {
-            var seconds = minutes * 60;
-            timers[row.rowIndex] = setInterval(function() {
-                if (seconds <= 0) {
-                    console.log('Timer acabou');
-                    clearInterval(timers[row.rowIndex]);
-                    alert("O tempo para o jogo '" + row.cells[0].textContent + "' acabou!");
-                    row.cells[4].textContent = "0 min";
-                } else {
-                    seconds--;
-                    console.log(seconds);
-                    var min = Math.floor(seconds / 60);
-                    var sec = seconds % 60;
-                    row.cells[4].text = min
-                }
-            }, 1000)
+        function goToMenu() {
+            window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
     </script>
 </body>
