@@ -13,10 +13,14 @@ db.authenticate()
 app.use(express.json());
 
 // Importar rotas
-const produtosRoutes = require('./rotas/clientesderotas');
+const clientesRoutes = require('./rotas/clientesderotas');
+const jogosRoutes = require('./rotas/jogosderotas');
+const aluguelRoutes = require('./rotas/aluguelderotas');
 
 // Usar rotas
-app.use('/', produtosRoutes);
+app.use(clientesRoutes);
+app.use(jogosRoutes);
+app.use(aluguelRoutes);
 
 // Iniciar o servidor
 const PORT = process.env.PORT || 3000;

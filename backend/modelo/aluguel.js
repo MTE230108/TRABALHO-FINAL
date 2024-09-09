@@ -3,25 +3,25 @@ const sequelize = require("../config/database");
 
     class aluguel extends Model {}
     aluguel.init({
-        id_aluguel:{
+        id:{
             type: DataTypes.INTEGER,
             primaryKey : true,
             autoIncrement: true
             
         }, 
-        hora_de_devoluçâo: {
+        hora_de_devolucao: {
             type: DataTypes.STRING
         },
-        descriçao:{
-            type: DataTypes.DATE
+        preco:{
+            type: DataTypes.STRING
         }, 
-        DEVOLVIDO:{
+        devolvido:{
             type: DataTypes.TINYINT
         }
         
     } , {
         sequelize,
-        modelname: 'aluguel',
+        modelname: 'aluguels',
         timestamps: false
 
      })

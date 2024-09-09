@@ -1,9 +1,9 @@
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require("../config/database");
 
-    class jogos extends Model {}
-     jogos.init({
-        id_jogos:{
+    class Jogo extends Model {}
+     Jogo.init({
+        id:{
             type: DataTypes.INTEGER,
             primaryKey : true,
             autoIncrement: true
@@ -12,10 +12,10 @@ const sequelize = require("../config/database");
         titulo: {
             type: DataTypes.STRING
         },
-        preço:{
+        preco:{
             type: DataTypes.TEXT
         }, 
-        ano_publicaçao:{
+        ano_publicacao:{
             type: DataTypes.INTEGER
         },
         editora:{
@@ -32,4 +32,4 @@ const sequelize = require("../config/database");
 
      })
 
-module.exports = jogos  
+module.exports = Jogo  
