@@ -61,6 +61,17 @@
             padding: 8px;
             width: 100px;
         }
+        #back-to-menu-button {
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 1%;
+        }
+        #back-to-menu-button:hover {
+            background-color: #999;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +84,7 @@
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
+        <img src="casa.png" id="back-to-menu-button" onclick="goToMenu()">
     </div>
 
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Pesquisar...">
@@ -233,6 +245,9 @@
                     row.cells[4].text = min
                 }
             }, 1000)
+        }
+        function goToMenu() {
+            window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
     </script>
 </body>
