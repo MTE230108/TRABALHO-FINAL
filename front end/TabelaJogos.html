@@ -77,8 +77,9 @@
 <body>
     <div class="form-container">
         <input type="text" id="nameInput" placeholder="Nome">
-        <input type="number" id="ageInput" placeholder="Idade">
+        <input type="text" id="ano_publicacaoInput" placeholder="ano_publicacao">
         <input type="text" id="preçoInput" placeholder="Preço">
+        <input type="text" id="EditoraInput" placeholder="Editora">
         <input type="text" id="AlugadoInput" placeholder="Alugado">
         <input type="number" id="timerInput" placeholder="Minutos" min="1" max="60">
         <button id="addRowButton">Adicionar</button>
@@ -93,8 +94,9 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Idade</th>
-                <th>Preço</th>
+                <th>ano_publicacao</th>
+                <th>Preço</th>]
+                <th>Editora</th>
                 <th>Alugado</th>
                 <th>Temporizador</th>
                 <th>Ações</th>
@@ -132,8 +134,9 @@
 
         document.getElementById("addRowButton").addEventListener("click", function() {
             var name = document.getElementById("nameInput").value;
-            var age = document.getElementById("ageInput").value;
+            var age = document.getElementById("ano_publicacaoInput").value;
             var preco = document.getElementById("preçoInput").value;
+            var Editora = document.getElementById("EditoraInput").value;
             var alugado = document.getElementById("AlugadoInput").value;
             var timer = document.getElementById("timerInput").value;
 
@@ -147,13 +150,15 @@
                 var cell4 = newRow.insertCell(3);
                 var cell5 = newRow.insertCell(4);
                 var cell6 = newRow.insertCell(5);
+                var cell6 = newRow.insertCell(6);
 
                 cell1.textContent = name;
                 cell2.textContent = age;
                 cell3.textContent = preco;
-                cell4.textContent = alugado;
-                cell5.textContent = timer ? `${timer} min` : "N/A";
-                cell6.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+                cell4.textContent = Editora;
+                cell5.textContent = alugado;
+                cell6.textContent = timer ? `${timer} min` : "N/A";
+                cell7.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
 
                 // Adiciona temporizador se houver
                 if (timer) {
@@ -161,8 +166,9 @@
                 }
 
                 document.getElementById("nameInput").value = "";
-                document.getElementById("ageInput").value = "";
+                document.getElementById("ano_publicacaoInput").value = "";
                 document.getElementById("preçoInput").value = "";
+                document.getElementById("EditoraInput").value = "";
                 document.getElementById("AlugadoInput").value = "";
                 document.getElementById("timerInput").value = "";
             } else {
@@ -185,8 +191,9 @@
         document.getElementById("editRowButton").addEventListener("click", function() {
             if (selectedRow) {
                 var name = document.getElementById("nameInput").value;
-                var age = document.getElementById("ageInput").value;
+                var age = document.getElementById("ano_publicacaopInput").value;
                 var preco = document.getElementById("preçoInput").value;
+                var Editora = document.getElementById("EditoraInput").value;
                 var alugado = document.getElementById("AlugadoInput").value;
                 var timer = document.getElementById("timerInput").value;
 
@@ -194,8 +201,9 @@
                     selectedRow.cells[0].textContent = name;
                     selectedRow.cells[1].textContent = age;
                     selectedRow.cells[2].textContent = preco;
-                    selectedRow.cells[3].textContent = alugado;
-                    selectedRow.cells[4].textContent = timer ? `${timer} min` : "N/A";
+                    selectedRow.cells[3].textContent = Editora;
+                    selectedRow.cells[4].textContent = alugado;
+                    selectedRow.cells[5].textContent = timer ? `${timer} min` : "N/A";
 
                     // Atualizar temporizador
                     clearInterval(timers[selectedRow.rowIndex]);
@@ -223,10 +231,11 @@
 
             // Preencher os campos do formulário com os dados da linha selecionada
             document.getElementById("nameInput").value = row.cells[0].textContent;
-            document.getElementById("ageInput").value = row.cells[1].textContent;
+            document.getElementById("ano_publicacaoInput").value = row.cells[1].textContent;
             document.getElementById("preçoInput").value = row.cells[2].textContent;
-            document.getElementById("AlugadoInput").value = row.cells[3].textContent;
-            document.getElementById("timerInput").value = row.cells[4].textContent.replace(' min', '');
+            document.getElementById("Editoranput").value = row.cells[3].textContent;
+            document.getElementById("AlugadoInput").value = row.cells[4].textContent;
+            document.getElementById("timerInput").value = row.cells[5].textContent.replace(' min', '');
         }
 
         function startTimer(row, minutes) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,18 @@
             margin-top: 20px;
             background-color: #ffffff;
         }
-        th, td {
+
+        th,
+        td {
             border: 2px solid #000000;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #ffffff;
         }
+
         #searchInput {
             margin-bottom: 12px;
             padding: 8px;
@@ -33,7 +38,10 @@
             color: white;
             border-radius: 5%;
         }
-        #addRowButton, #deleteRowButton, #editRowButton {
+
+        #addRowButton,
+        #deleteRowButton,
+        #editRowButton {
             margin-top: 10px;
             padding: 8px 16px;
             font-size: 16px;
@@ -43,19 +51,24 @@
             color: white;
             border-radius: 10%;
         }
+
         .form-container {
             margin-bottom: 20px;
         }
+
         .form-container input {
             margin-right: 10px;
             padding: 8px;
             background-color: black;
             color: white;
         }
-        .form-container button, .form-container #back-to-menu-button {
+
+        .form-container button,
+        .form-container #back-to-menu-button {
             padding: 8px 16px;
             font-size: 16px;
         }
+
         #back-to-menu-button {
             padding: 10px;
             color: white;
@@ -64,19 +77,22 @@
             cursor: pointer;
             width: 1%;
         }
+
         #back-to-menu-button:hover {
             background-color: #999;
         }
-
     </style>
 </head>
+
 <body>
     <div class="form-container">
         <input type="text" id="nameInput" placeholder="Nome">
         <input type="number" id="ageInput" placeholder="Idade">
+        <input type="text" id="EmailInput" placeholder="Email">
         <input type="text" id="jogoInput" placeholder="Jogo">
-        <input type="text" id="AlugandoInput" placeholder="Alugando">
-        <input type="text" id="phoneInput" placeholder="Telefone"> <!-- Novo campo -->
+        <input type="text" id="CPFInput" placeholder="CPF">
+        <input type="text" id="phoneInput" placeholder="Telefone">
+        <input type="text" id="hora_de_devolucaoInput" placeholder="hora_de_devolucao"> <!-- Novo campo -->
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
@@ -90,9 +106,11 @@
             <tr>
                 <th>Nome</th>
                 <th>Idade</th>
+                <th>Email</th>
                 <th>Jogo</th>
-                <th>Alugando</th>
-                <th>Telefone</th> <!-- Nova coluna -->
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>hora_de_devolucao</th> <!-- Nova coluna -->
                 <th>Ações</th>
             </tr>
         </thead>
@@ -125,43 +143,85 @@
             }
         }
 
-        document.getElementById("addRowButton").addEventListener("click", function() {
+        document.getElementById("addRowButton").addEventListener("click", function () {
             var name = document.getElementById("nameInput").value;
             var age = document.getElementById("ageInput").value;
+            var Email = document.getElementById("EmailInput").value;
             var jogo = document.getElementById("jogoInput").value;
-            var alugando = document.getElementById("AlugandoInput").value;
-            var phone = document.getElementById("phoneInput").value; // Novo campo
+            var alugando = document.getElementById("CPFInput").value;
+            var phone = document.getElementById("phoneInput").value;
+            var hora_de_devolucao = document.getElementById("hora_de_devolucaoInput").value; // Novo campo
 
             if (name && age && jogo && alugando && phone) { // Verifica todos os campos
+
+                fetch('http://localhost:3000/pessoas', {
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pessoa)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // SE DER CERTO
+                            // adiciona na tabela
+                            return response.json();
+                        }
+                        throw new Error('Erro ao cadastrar a pessoa');
+                    })
+                    .then(data => {
+                        console.log('Pessoa cadastrada com sucesso:', data);
+                        // Limpar os campos de entrada após o envio
+                        document.getElementById("nameInput").value = "";
+                document.getElementById("ageInput").value = "";
+                document.getElementById("EmailInput").value = "";
+                document.getElementById("jogoInput").value = "";
+                document.getElementById("CPFInput").value = "";
+                document.getElementById("phoneInput").value = "";
+                document.getElementById("hora_de_devolucaoInput").value = "";
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                    });
+
+
+
+
                 var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
-                
+
                 var cell1 = newRow.insertCell(0);
                 var cell2 = newRow.insertCell(1);
                 var cell3 = newRow.insertCell(2);
                 var cell4 = newRow.insertCell(3);
                 var cell5 = newRow.insertCell(4); // Nova célula
-                var cell6 = newRow.insertCell(5); // Célula para ações
-                
+                var cell6 = newRow.insertCell(5);
+                var cell7 = newRow.insertCell(6);
+                var cell8 = newRow.insertCell(7); // Célula para ações
+
                 cell1.textContent = name;
                 cell2.textContent = age;
                 cell3.textContent = jogo;
-                cell4.textContent = alugando;
-                cell5.textContent = phone; // Novo campo
+                cell4.textContent = CPF;
+                cell5.textContent = phone;
+                cell6.textContent = Email;
+                cell7.textContent = hora_de_devolucao; // Novo campo
 
                 cell6.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-                
+
                 document.getElementById("nameInput").value = "";
                 document.getElementById("ageInput").value = "";
+                document.getElementById("EmailInput").value = "";
                 document.getElementById("jogoInput").value = "";
-                document.getElementById("AlugandoInput").value = "";
-                document.getElementById("phoneInput").value = ""; // Limpar o novo campo
+                document.getElementById("CPFInput").value = "";
+                document.getElementById("phoneInput").value = "";
+                document.getElementById("hora_de_devolucaoInput").value = ""; // Limpar o novo campo
             } else {
                 alert("Por favor, preencha todos os campos.");
             }
         });
 
-        document.getElementById("deleteRowButton").addEventListener("click", function() {
+        document.getElementById("deleteRowButton").addEventListener("click", function () {
             if (selectedRow) {
                 selectedRow.parentNode.removeChild(selectedRow);
                 selectedRow = null;
@@ -170,20 +230,24 @@
             }
         });
 
-        document.getElementById("editRowButton").addEventListener("click", function() {
+        document.getElementById("editRowButton").addEventListener("click", function () {
             if (selectedRow) {
                 var name = document.getElementById("nameInput").value;
                 var age = document.getElementById("ageInput").value;
+                var name = document.getElementById("EmailInput").value;
                 var jogo = document.getElementById("jogoInput").value;
-                var alugando = document.getElementById("AlugandoInput").value;
-                var phone = document.getElementById("phoneInput").value; // Novo campo
+                var alugando = document.getElementById("CPFInput").value;
+                var phone = document.getElementById("phoneInput").value;
+                var hora_de_devolucao = document.getElementById("hora_de_devolucaoInput").value; // Novo campo
 
                 if (name && age && jogo && alugando && phone) { // Verifica todos os campos
                     selectedRow.cells[0].textContent = name;
                     selectedRow.cells[1].textContent = age;
-                    selectedRow.cells[2].textContent = jogo;
-                    selectedRow.cells[3].textContent = alugando;
-                    selectedRow.cells[4].textContent = phone; // Atualiza o novo campo
+                    selectedRow.cells[2].textContent = Email;
+                    selectedRow.cells[3].textContent = jogo;
+                    selectedRow.cells[4].textContent = CPF;
+                    selectedRow.cells[5].textContent = phone;
+                    selectedRow.cells[6].textContent = hora_de_devolucao; // Atualiza o novo campo
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
@@ -197,7 +261,7 @@
             if (selectedRow) {
                 selectedRow.style.backgroundColor = "";
             }
-            
+
             // Marcar a nova linha selecionada
             var row = button.parentNode.parentNode;
             row.style.backgroundColor = "#f4f4f4";
@@ -206,15 +270,18 @@
             // Preencher os campos do formulário com os dados da linha selecionada
             document.getElementById("nameInput").value = row.cells[0].textContent;
             document.getElementById("ageInput").value = row.cells[1].textContent;
-            document.getElementById("jogoInput").value = row.cells[2].textContent;
-            document.getElementById("AlugandoInput").value = row.cells[3].textContent;
-            document.getElementById("phoneInput").value = row.cells[4].textContent; // Novo campo
+            document.getElementById("ageInput").value = row.cells[2].textContent;
+            document.getElementById("jogoInput").value = row.cells[3].textContent;
+            document.getElementById("CPFInput").value = row.cells[4].textContent;
+            document.getElementById("phoneInput").value = row.cells[5].textContent;
+            document.getElementById("hora_de_devolucaoInput").value = row.cells[6].textContent; // Novo campo
         }
 
         function goToMenu() {
             window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
-        
+
     </script>
 </body>
+
 </html>
