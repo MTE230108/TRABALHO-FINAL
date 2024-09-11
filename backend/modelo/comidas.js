@@ -18,9 +18,6 @@ const sequelize = require("../config/database");
         validade:{
             type: DataTypes.INTEGER
         },
-        editora:{
-            type: DataTypes.STRING
-        },
         quantidade:{
             type: DataTypes.TINYINT
         }
