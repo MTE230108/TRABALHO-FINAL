@@ -10,7 +10,7 @@ Cliente.init({
 
     },
     nome: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     },
     email: {
         type: DataTypes.STRING
