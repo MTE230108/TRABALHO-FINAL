@@ -18,13 +18,13 @@ Cliente.init({
     telefone: {
         type: DataTypes.STRING
     },
-    endereco: {
-        type: DataTypes.STRING
+    jogo: {
+        type: DataTypes.INTEGER
     },
     cpf: {
         type: DataTypes.STRING
     },
-   hora_de_jogo: {
+   hora_de_devolucao: {
         type: DataTypes.DECIMAL
     }
 }, {
