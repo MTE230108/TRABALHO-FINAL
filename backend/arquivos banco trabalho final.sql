@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `nome` int(11) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `telefone` varchar(50) DEFAULT NULL,
-  `endereco` varchar(50) DEFAULT NULL,
+  `jogo` varchar(50) DEFAULT NULL,
   `cpf` varchar(50) DEFAULT NULL,
-  `hora_de_jogo` decimal(20,6) DEFAULT NULL,
+  `hora_de_devolucao` decimal(20,6) DEFAULT NULL,
   PRIMARY KEY (`id_cliente`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
