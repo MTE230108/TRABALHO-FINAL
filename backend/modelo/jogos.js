@@ -13,7 +13,7 @@ const sequelize = require("../config/database");
             type: DataTypes.STRING
         },
         preco:{
-            type: DataTypes.TEXT
+            type: DataTypes.DECIMAL
         }, 
         ano_publicacao:{
             type: DataTypes.INTEGER

@@ -13,13 +13,13 @@ const sequelize = require("../config/database");
             type: DataTypes.STRING
         },
         preco:{
-            type: DataTypes.TEXT
+            type: DataTypes.DECIMAL
         }, 
         validade:{
-            type: DataTypes.INTEGER
+            type: DataTypes.DATE
         },
         quantidade:{
-            type: DataTypes.TINYINT
+            type: DataTypes.INTEGER
         }
         
     } , {

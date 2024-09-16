@@ -15,6 +15,9 @@ Cliente.init({
     email: {
         type: DataTypes.STRING
     },
+    idade: {
+        type : DataTypes.INTEGER
+    },
     telefone: {
         type: DataTypes.STRING
     },
@@ -25,7 +28,7 @@ Cliente.init({
         type: DataTypes.STRING
     },
    hora_de_devolucao: {
-        type: DataTypes.DECIMAL
+        type: DataTypes.INTEGER
     }
 }, {
     sequelize,
