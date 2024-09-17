@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `idade` int(11) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `telefone` varchar(50) DEFAULT NULL,
-  `endereco` varchar(50) DEFAULT NULL,
+  `jogo` varchar(50) DEFAULT NULL,
   `cpf` varchar(50) DEFAULT NULL,
   `jogo` varchar(50) DEFAULT NULL,
   `hora_de_jogo` int(11) DEFAULT NULL,
