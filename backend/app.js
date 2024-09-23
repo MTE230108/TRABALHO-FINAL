@@ -18,11 +18,13 @@ app.use(cors())
 const clientesRoutes = require('./rotas/clientesderotas');
 const jogosRoutes = require('./rotas/jogosderotas');
 const aluguelRoutes = require('./rotas/aluguelderotas');
+const comidasRoutes = require('./rotas/comidasderotas');
 
 // Usar rotas
 app.use(clientesRoutes);
 app.use(jogosRoutes);
 app.use(aluguelRoutes);
+app.use(comidasRoutes);
 
 // Iniciar o servidor
 const PORT = process.env.PORT || 3000;

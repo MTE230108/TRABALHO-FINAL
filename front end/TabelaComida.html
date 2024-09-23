@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,18 @@
             margin-top: 20px;
             background-color: #ffffff;
         }
-        th, td {
+
+        th,
+        td {
             border: 2px solid #000000;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #ffffff;
         }
+
         #searchInput {
             margin-bottom: 12px;
             padding: 8px;
@@ -33,7 +38,10 @@
             color: white;
             border-radius: 5%
         }
-        #addRowButton, #deleteRowButton, #editRowButton {
+
+        #addRowButton,
+        #deleteRowButton,
+        #editRowButton {
             margin-top: 10px;
             padding: 8px 16px;
             font-size: 16px;
@@ -43,19 +51,23 @@
             color: white;
             border-radius: 10%
         }
+
         .form-container {
             margin-bottom: 20px;
         }
+
         .form-container input {
             margin-right: 10px;
             padding: 8px;
             background-color: black;
             color: white;
         }
+
         .form-container button {
             padding: 8px 16px;
             font-size: 16px;
         }
+
         #back-to-menu-button {
             padding: 10px;
             color: white;
@@ -64,21 +76,23 @@
             cursor: pointer;
             width: 1%;
         }
+
         #back-to-menu-button:hover {
             background-color: #999;
         }
     </style>
 </head>
+
 <body>
     <div class="form-container">
-        <input type="text" id="nameInput" placeholder="Nome">
-        <input type="text" id="ValidadeInput" placeholder="Validade">
-        <input type="text" id="preçoInput" placeholder="Preço">
-        <input type="text" id="QuantidadeInput" placeholder="Quantidade">
+        <input type="text" id="nomeInput" placeholder="Nome">
+        <input type="text" id="validadeInput" placeholder="Validade">
+        <input type="text" id="precoInput" placeholder="Preço">
+        <input type="text" id="quantidadeInput" placeholder="Quantidade">
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
         <button id="editRowButton">Editar Selecionado</button>
-        <img src="casa.png" id="back-to-menu-button" onclick="goToMenu()">      
+        <img src="casa.png" id="back-to-menu-button" onclick="goToMenu()">
     </div>
 
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Pesquisar...">
@@ -122,38 +136,38 @@
             }
         }
 
-        document.getElementById("addRowButton").addEventListener("click", function() {
-            var name = document.getElementById("nameInput").value;
-            var Validade = document.getElementById("ValidadeInput").value;
-            var preco = document.getElementById("preçoInput").value;
-            var Quantidade = document.getElementById("QuantidadeInput").value;
-            
-            if (name && Validade && preco) {
+        document.getElementById("addRowButton").addEventListener("click", function () {
+            var nome = document.getElementById("nomeInput").value;
+            var validade = document.getElementById("validadeInput").value;
+            var preco = document.getElementById("precoInput").value;
+            var quantidade = document.getElementById("quantidadeInput").value;
+
+            if (nome && validade && preco) {
                 var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
-                
+
                 var cell1 = newRow.insertCell(0);
                 var cell2 = newRow.insertCell(1);
                 var cell3 = newRow.insertCell(2);
                 var cell4 = newRow.insertCell(3);
                 var cell5 = newRow.insertCell(4);
-                
-                cell1.textContent = name;
-                cell2.textContent = Validade;
+
+                cell1.textContent = nome;
+                cell2.textContent = validade;
                 cell3.textContent = preco;
-                cell4.textContent = Quantidade;
+                cell4.textContent = quantidade;
                 cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-                
-                document.getElementById("nameInput").value = "";
-                document.getElementById("ValidadeInput").value = "";
-                document.getElementById("preçoInput").value = "";
-                document.getElementById("QuantidadeInput").value = "";
+
+                document.getElementById("nomeInput").value = "";
+                document.getElementById("validadeInput").value = "";
+                document.getElementById("precoInput").value = "";
+                document.getElementById("quantidadeInput").value = "";
             } else {
                 alert("Por favor, preencha todos os campos.");
             }
         });
 
-        document.getElementById("deleteRowButton").addEventListener("click", function() {
+        document.getElementById("deleteRowButton").addEventListener("click", function () {
             if (selectedRow) {
                 selectedRow.parentNode.removeChild(selectedRow);
                 selectedRow = null;
@@ -162,18 +176,109 @@
             }
         });
 
-        document.getElementById("editRowButton").addEventListener("click", function() {
+        document.getElementById("editRowButton").addEventListener("click", function () {
             if (selectedRow) {
-                var name = document.getElementById("nameInput").value;
-                var age = document.getElementById("ValidadeInput").value;
-                var preco = document.getElementById("preçoInput").value;
-                var alugado = document.getElementById("QuantidadeInput").value;
+                var name = document.getElementById("nomeInput").value;
+                var validade = document.getElementById("validadeInput").value;
+                var preco = document.getElementById("precoInput").value;
+                var alugado = document.getElementById("quantidadeInput").value;
 
-                if (name && age && preco) {
-                    selectedRow.cells[0].textContent = name;
-                    selectedRow.cells[1].textContent = Validade;
+                if (nome && age && preco) {
+                    selectedRow.cells[0].textContent = nome;
+                    selectedRow.cells[1].textContent = validade;
                     selectedRow.cells[2].textContent = preco;
-                    selectedRow.cells[3].textContent = Quantidade;
+                    selectedRow.cells[3].textContent = quantidade;
+                } else {
+                    alert("Por favor, preencha todos os campos.");
+                }
+            } else {
+                alert("Nenhuma linha selecionada para editar.");
+            }
+
+            const Comidas = {
+                nome: nome,
+                validade: validade,
+                preco: preco,
+                quantidade: quantidade,
+            };
+
+            fetch('http://localhost:3000/comidas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(comidas)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+                        var newRow = table.insertRow();
+
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        var cell3 = newRow.insertCell(2);
+                        var cell4 = newRow.insertCell(3);
+                        var cell5 = newRow.insertCell(4); // Nova célula
+                        // Célula para ações
+
+                        cell1.textContent = nome;
+                        cell2.textContent = validade;
+                        cell3.textContent = preco
+                        cell4.textContent = quantidade
+
+                        cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+
+                        alert('Comida criado com sucesso!')
+                    }
+                })
+                .then(data => {
+                    console.log('Comida cadastrada com sucesso:', data);
+                    // Limpar os campos de entrada após o envio
+                    document.getElementById("nomeInput").value = "";
+                    document.getElementById("validadeInput").value = "";
+                    document.getElementById("precoInput").value = "";
+                    document.getElementById("quantidadeInput").value = "";
+
+                })
+                .catch(error => {
+                    alert('Erro ao criar a comida')
+                })
+        })
+        document.getElementById("deleteRowButton").addEventListener("click", function () {
+            if (selectedRow) {
+                const cpf = selectedRow.cells[4].textContent
+                fetch('http://localhost:3000/comidas/' + nome, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                    .then(response => {
+                        if (response.ok) {
+                            selectedRow.parentNode.removeChild(selectedRow);
+                            selectedRow = null;
+                        } else {
+                            alert('Erro ao deletar')
+                        }
+                    }
+                    )
+            } else {
+                alert("Nenhuma linha selecionada para deletar.");
+            }
+        });
+        document.getElementById("editRowButton").addEventListener("click", function () {
+            if (selectedRow) {
+                var nome = document.getElementById("nomeInput").value;
+                var validade = document.getElementById("validadeInput").value;
+                var preco = document.getElementById("precoInput").value;
+                var quantidade = document.getElementById("quantidadeInput").value;
+                    
+                if (nome && age && preco) {
+                    selectedRow.cells[0].textContent = nome;
+                    selectedRow.cells[1].textContent = validade;
+                    selectedRow.cells[2].textContent = preco;
+                    selectedRow.cells[3].textContent = quantidade;
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
@@ -181,27 +286,84 @@
                 alert("Nenhuma linha selecionada para editar.");
             }
         });
+        function selectRow(button) {
+            // Desmarcar a linha previamente selecionada
+            if (selectedRow) {
+                selectedRow.style.backgroundColor = "";
+            }
+
+            // Marcar a nova linha selecionada
+            var row = button.parentNode.parentNode;
+            row.style.backgroundColor = "#f4f4f4";
+            selectedRow = row;
+
+            document.getElementById("nomeInput").value = row.cells[0].textContent;
+            document.getElementById("validadeInput").value = row.cells[1].textContent;
+            document.getElementById("precoInput").value = row.cells[2].textContent;
+            document.getElementById("quantidadeInput").value = row.cells[3].textContent;
+
+        }
+
+function goToMenu() {
+    window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
+}
+
+function loadcomidas() {
+    fetch('http://localhost:3000/comidas', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    })
+    .then(response => response.json())
+                .then(clientes => {
+                    var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+                    for(i=0; i<clientes.length; i++){
+                        const comida = clientes[i]
+                        var newRow = table.insertRow();
+
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        var cell3 = newRow.insertCell(2);
+                        var cell4 = newRow.insertCell(3);
+                        var cell5 = newRow.insertCell(4);
+
+                        cell1.textContent = comidas.nome;
+                        cell2.textContent = comidas.validade;
+                        cell3.textContent = comidas.preco;
+                        cell4.textContent = comidas.quantidade;
+
+                        cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+                }})
+                .catch(error => {
+                    alert('Erro ao criar o comidas')
+                })
+        }
+
+        loadcomidas()
 
         function selectRow(button) {
             // Desmarcar a linha previamente selecionada
             if (selectedRow) {
                 selectedRow.style.backgroundColor = "";
             }
-            
+
             // Marcar a nova linha selecionada
             var row = button.parentNode.parentNode;
             row.style.backgroundColor = "#f4f4f4";
             selectedRow = row;
 
             // Preencher os campos do formulário com os dados da linha selecionada
-            document.getElementById("nameInput").value = row.cells[0].textContent;
-            document.getElementById("ValidadeInput").value = row.cells[1].textContent;
-            document.getElementById("preçoInput").value = row.cells[2].textContent;
-            document.getElementById("QuantidadeInput").value = row.cells[3].textContent;
+            document.getElementById("nomeInput").value = row.cells[0].textContent;
+            document.getElementById("validadeInput").value = row.cells[1].textContent;
+            document.getElementById("precoInput").value = row.cells[2].textContent;
+            document.getElementById("quantidadeInput").value = row.cells[3].textContent;
         }
         function goToMenu() {
             window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
     </script>
 </body>
+
 </html>
