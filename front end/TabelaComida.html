@@ -142,30 +142,57 @@
             var preco = document.getElementById("precoInput").value;
             var quantidade = document.getElementById("quantidadeInput").value;
 
-            if (nome && validade && preco) {
-                var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
-                var newRow = table.insertRow();
+            if (nome && validade && preco && quantidade) {
+                
+            const comida = {
+                nome: nome,
+                validade: validade,
+                preco: preco,
+                quantidade: quantidade,
+            };
 
-                var cell1 = newRow.insertCell(0);
-                var cell2 = newRow.insertCell(1);
-                var cell3 = newRow.insertCell(2);
-                var cell4 = newRow.insertCell(3);
-                var cell5 = newRow.insertCell(4);
+            fetch('http://localhost:3000/comidas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(comida)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+                        var newRow = table.insertRow();
 
-                cell1.textContent = nome;
-                cell2.textContent = validade;
-                cell3.textContent = preco;
-                cell4.textContent = quantidade;
-                cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        var cell3 = newRow.insertCell(2);
+                        var cell4 = newRow.insertCell(3);
+                        var cell5 = newRow.insertCell(4); // Nova célula
+                        // Célula para ações
 
-                document.getElementById("nomeInput").value = "";
-                document.getElementById("validadeInput").value = "";
-                document.getElementById("precoInput").value = "";
-                document.getElementById("quantidadeInput").value = "";
-            } else {
-                alert("Por favor, preencha todos os campos.");
-            }
-        });
+                        cell1.textContent = nome;
+                        cell2.textContent = validade;
+                        cell3.textContent = preco
+                        cell4.textContent = quantidade
+
+                        cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
+
+                        alert('Comida criado com sucesso!')
+                    }
+                })
+                .then(data => {
+                    console.log('Comida cadastrada com sucesso:', data);
+                    // Limpar os campos de entrada após o envio
+                    document.getElementById("nomeInput").value = "";
+                    document.getElementById("validadeInput").value = "";
+                    document.getElementById("precoInput").value = "";
+                    document.getElementById("quantidadeInput").value = "";
+
+                })
+                .catch(error => {
+                    alert('Erro ao criar a comida')
+                })
+        }})
 
         document.getElementById("deleteRowButton").addEventListener("click", function () {
             if (selectedRow) {
@@ -183,7 +210,7 @@
                 var preco = document.getElementById("precoInput").value;
                 var alugado = document.getElementById("quantidadeInput").value;
 
-                if (nome && age && preco) {
+                if (nome && validade && preco && quantidade) {
                     selectedRow.cells[0].textContent = nome;
                     selectedRow.cells[1].textContent = validade;
                     selectedRow.cells[2].textContent = preco;
@@ -273,8 +300,8 @@
                 var validade = document.getElementById("validadeInput").value;
                 var preco = document.getElementById("precoInput").value;
                 var quantidade = document.getElementById("quantidadeInput").value;
-                    
-                if (nome && age && preco) {
+
+                if (nome && validade && preco && quantidade) {
                     selectedRow.cells[0].textContent = nome;
                     selectedRow.cells[1].textContent = validade;
                     selectedRow.cells[2].textContent = preco;
@@ -304,22 +331,23 @@
 
         }
 
-function goToMenu() {
-    window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
-}
-
-function loadcomidas() {
-    fetch('http://localhost:3000/comidas', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
+        function goToMenu() {
+            window.location.href = 'menu.html'; // Altere para o caminho da sua página de menu
         }
 
-    })
-    .then(response => response.json())
+        function loadcomidas() {
+            fetch('http://localhost:3000/comidas', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            })
+                .then(response => response.json())
                 .then(clientes => {
+                  
                     var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
-                    for(i=0; i<clientes.length; i++){
+                    for (i = 0; i < clientes.length; i++) {
                         const comida = clientes[i]
                         var newRow = table.insertRow();
 
@@ -329,13 +357,14 @@ function loadcomidas() {
                         var cell4 = newRow.insertCell(3);
                         var cell5 = newRow.insertCell(4);
 
-                        cell1.textContent = comidas.nome;
-                        cell2.textContent = comidas.validade;
-                        cell3.textContent = comidas.preco;
-                        cell4.textContent = comidas.quantidade;
+                        cell1.textContent = comida.nome;
+                        cell2.textContent = comida.validade;
+                        cell3.textContent = comida.preco;
+                        cell4.textContent = comida.quantidade;
 
                         cell5.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-                }})
+                    }
+                })
                 .catch(error => {
                     alert('Erro ao criar o comidas')
                 })
