@@ -1,9 +1,9 @@
-const comidas = require('../modelo/comidas');
+const Comidas = require('../modelo/comidas');
 
 const comidasController = {
     createcomidas: async (req, res) => {
         try {
-            const novocomidas = await comidas.create(req.body);
+            const novocomidas = await Comidas.create(req.body);
             res.json(novocomidas);
         } catch (error) {
             res.status(500).send(error.message);
@@ -12,8 +12,8 @@ const comidasController = {
 
     getAllcomidas: async (req, res) => {
         try {
-            const comidas = await comidas.findAll();
-            res.json(comidass);
+            const comidas = await Comidas.findAll();
+            res.json(comidas);
         } catch (error) {
             res.status(500).send(error.message);
         }
@@ -21,7 +21,7 @@ const comidasController = {
 
     getcomidasById: async (req, res) => {
         try {
-            const comidas = await comidas.findByPk(req.params.id);
+            const comidas = await Comidas.findByPk(req.params.id);
             if (!comidas) {
                 return res.status(404).send('comidas não encontrado');
             }
@@ -33,7 +33,7 @@ const comidasController = {
 
     updatecomidas: async (req, res) => {
         try {
-            const comidas = await comidas.findByPk(req.params.id);
+            const comidas = await Comidas.findByPk(req.params.id);
             if (!comidas) {
                 return res.status(404).send('comidas não encontrado');
             }
@@ -46,7 +46,11 @@ const comidasController = {
 
     deletecomidas: async (req, res) => {
         try {
-            const comidas = await comidas.findByPk(req.params.id);
+            const comidas = await Comidas.findOne({
+                where: {
+                    nome: req.params.nome
+                }    
+            });
             if (!comidas) {
                 return res.status(404).send('comidas não encontrado');
             }
