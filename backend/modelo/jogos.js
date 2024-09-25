@@ -25,6 +25,7 @@ const sequelize = require("../config/database");
             type: DataTypes.TINYINT
         }
         
+        
     } , {
         sequelize,
         modelname: 'jogos',
