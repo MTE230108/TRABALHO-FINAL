@@ -194,15 +194,6 @@
                 })
         }})
 
-        document.getElementById("deleteRowButton").addEventListener("click", function () {
-            if (selectedRow) {
-                selectedRow.parentNode.removeChild(selectedRow);
-                selectedRow = null;
-            } else {
-                alert("Nenhuma linha selecionada para deletar.");
-            }
-        });
-
         document.getElementById("editRowButton").addEventListener("click", function () {
             if (selectedRow) {
                 var name = document.getElementById("nomeInput").value;
@@ -273,14 +264,13 @@
         })
         document.getElementById("deleteRowButton").addEventListener("click", function () {
             if (selectedRow) {
-                const cpf = selectedRow.cells[4].textContent
+                const nome = selectedRow.cells[0].textContent
                 fetch('http://localhost:3000/comidas/' + nome, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
-
                     .then(response => {
                         if (response.ok) {
                             selectedRow.parentNode.removeChild(selectedRow);

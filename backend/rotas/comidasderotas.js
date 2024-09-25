@@ -15,6 +15,6 @@ router.get('/comidas/:id', comidasController.getcomidasById);
 router.put('/comidas/:id', comidasController.updatecomidas);
 
 // Rota para deletar um comidas
-router.delete('/comidas/:id', comidasController.deletecomidas);
+router.delete('/comidas/:nome', comidasController.deletecomidas);
 
 module.exports = router;
