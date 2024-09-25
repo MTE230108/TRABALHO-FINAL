@@ -1,9 +1,9 @@
-const jogos = require('../modelo/jogos');
+const Jogos = require('../modelo/jogos');
 
 const jogosController = {
     createJogo: async (req, res) => {
         try {
-            const novojogos = await jogos.create(req.body);
+            const novojogos = await Jogos.create(req.body);
             res.json(novojogos);
         } catch (error) {
             res.status(500).send(error.message);
@@ -12,8 +12,8 @@ const jogosController = {
 
     getAllJogos: async (req, res) => {
         try {
-            const jogos = await jogos.findAll();
-            res.json(jogoss);
+            const jogos = await Jogos.findAll();
+            res.json(jogos);
         } catch (error) {
             res.status(500).send(error.message);
         }
@@ -21,7 +21,7 @@ const jogosController = {
 
     getJogoById: async (req, res) => {
         try {
-            const jogos = await jogos.findByPk(req.params.id);
+            const jogos = await Jogos.findByPk(req.params.id);
             if (!jogos) {
                 return res.status(404).send('jogos não encontrado');
             }
@@ -33,7 +33,7 @@ const jogosController = {
 
     updateJogo: async (req, res) => {
         try {
-            const jogos = await jogos.findByPk(req.params.id);
+            const jogos = await Jogos.findByPk(req.params.id);
             if (!jogos) {
                 return res.status(404).send('jogos não encontrado');
             }
@@ -46,7 +46,11 @@ const jogosController = {
 
     deleteJogo: async (req, res) => {
         try {
-            const jogos = await jogos.findByPk(req.params.id);
+            const jogos = await Jogos.findOne({
+                where:{
+                    titulo:req.params.titulo
+                }
+            });
             if (!jogos) {
                 return res.status(404).send('jogos não encontrado');
             }
