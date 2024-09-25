@@ -16,7 +16,7 @@ Cliente.init({
         type: DataTypes.STRING
     },
     idade: {
-        type : DataTypes.INTEGER
+        type: DataTypes.INTEGER
     },
     telefone: {
         type: DataTypes.STRING
@@ -27,13 +27,13 @@ Cliente.init({
     cpf: {
         type: DataTypes.STRING
     },
-   hora_de_devolucao: {
+    hora_de_devolucao: {
         type: DataTypes.INTEGER
     }
 }, {
     sequelize,
     modelName: 'clientes',
-    timestamps: false 
+    timestamps: false
 })
 
 module.exports = Cliente 

@@ -12,7 +12,7 @@ router.get('/clientes', ClienteController.getAllClientes);
 router.get('/clientes/:id', ClienteController.getClienteById);
 
 // Rota para atualizar um cliente
-router.put('/clientes/:id', ClienteController.updateCliente);
+router.put('/clientes/:cpf', ClienteController.updateCliente);
 
 // Rota para deletar um cliente
 router.delete('/clientes/:cpf', ClienteController.deleteCliente);

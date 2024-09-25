@@ -193,13 +193,13 @@
                     alert('Erro ao criar a comida')
                 })
         }})
-
+            
         document.getElementById("editRowButton").addEventListener("click", function () {
             if (selectedRow) {
                 var name = document.getElementById("nomeInput").value;
                 var validade = document.getElementById("validadeInput").value;
                 var preco = document.getElementById("precoInput").value;
-                var alugado = document.getElementById("quantidadeInput").value;
+                var quantidade = document.getElementById("quantidadeInput").value;
 
                 if (nome && validade && preco && quantidade) {
                     selectedRow.cells[0].textContent = nome;
@@ -292,6 +292,25 @@
                 var quantidade = document.getElementById("quantidadeInput").value;
 
                 if (nome && validade && preco && quantidade) {
+
+                    const comida = {
+                        nome : nome,
+                        validade : validade,
+                        preco : preco,
+                        quantidade : quantidade
+                    };
+
+                    fetch('http://localhost:3000/comidas/' + nome, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(comida)
+
+                    })
+
+                    .then(response => {
+                        if (response.ok) {
                     selectedRow.cells[0].textContent = nome;
                     selectedRow.cells[1].textContent = validade;
                     selectedRow.cells[2].textContent = preco;
@@ -299,10 +318,15 @@
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
+                });
             } else {
                 alert("Nenhuma linha selecionada para editar.");
-            }
-        });
+            }        
+    
+        }
+
+        })
+        
         function selectRow(button) {
             // Desmarcar a linha previamente selecionada
             if (selectedRow) {

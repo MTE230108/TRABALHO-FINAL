@@ -33,7 +33,11 @@ const ClienteController = {
 
     updateCliente: async (req, res) => {
         try {
-            const cliente = await Cliente.findByPk(req.params.id);
+            const cliente = await Cliente.findOne({
+                where: {
+                    cpf: req.params.cpf
+                }
+            });
             if (!cliente) {
                 return res.status(404).send('Cliente não encontrado');
             }
