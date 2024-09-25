@@ -88,10 +88,10 @@
     <div class="form-container">
         <input type="text" id="nomeInput" placeholder="Nome">
         <input type="number" id="idadeInput" placeholder="Idade">
-        <input type="text" id="EmailInput" placeholder="Email">
+        <input type="text" id="emailInput" placeholder="Email">
         <input type="text" id="jogoInput" placeholder="Jogo">
-        <input type="text" id="CPFInput" placeholder="CPF">
-        <input type="text" id="TelefoneInput" placeholder="Telefone">
+        <input type="text" id="cpfInput" placeholder="CPF">
+        <input type="text" id="telefoneInput" placeholder="Telefone">
         <input type="text" id="hora_de_devolucaoInput" placeholder="hora_de_devolucao"> <!-- Novo campo -->
         <button id="addRowButton">Adicionar</button>
         <button id="deleteRowButton">Deletar Selecionado</button>
@@ -144,23 +144,23 @@
         }
 
         document.getElementById("addRowButton").addEventListener("click", function () {
-            var name = document.getElementById("nomeInput").value;
+            var nome = document.getElementById("nomeInput").value;
             var idade = document.getElementById("idadeInput").value;
-            var Email = document.getElementById("EmailInput").value;
+            var email = document.getElementById("emailInput").value;
             var jogo = document.getElementById("jogoInput").value;
-            var CPF = document.getElementById("CPFInput").value;
-            var Telefone = document.getElementById("TelefoneInput").value;
+            var cpf = document.getElementById("cpfInput").value;
+            var telefone = document.getElementById("telefoneInput").value;
             var hora_de_devolucao = document.getElementById("hora_de_devolucaoInput").value; // Novo campo
 
-            if (nome && idade && jogo && CPF && Telefone) { // Verifica todos os campos
+            if (nome && idade && email && jogo && cpf && telefone && hora_de_devolucao) { // Verifica todos os campos
 
                 const cliente = {
                     nome: nome,
                     idade: idade,
-                    email: Email,
+                    email: email,
                     jogo: jogo,
-                    cpf: CPF,
-                    telefone: Telefone,
+                    cpf: cpf,
+                    telefone: telefone,
                     hora_de_devolucao: hora_de_devolucao,
                 };
 
@@ -189,9 +189,9 @@
                             cell1.textContent = nome;
                             cell2.textContent = idade;
                             cell3.textContent = jogo;
-                            cell4.textContent = CPF;
-                            cell5.textContent = Telefone;
-                            cell6.textContent = Email;
+                            cell4.textContent = cpf;
+                            cell5.textContent = telefone;
+                            cell6.textContent = email;
                             cell7.textContent = hora_de_devolucao; // Novo campo
 
                             cell8.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
@@ -204,10 +204,10 @@
                         // Limpar os campos de entrada após o envio
                         document.getElementById("nomeInput").value = "";
                         document.getElementById("idadeInput").value = "";
-                        document.getElementById("EmailInput").value = "";
+                        document.getElementById("emailInput").value = "";
                         document.getElementById("jogoInput").value = "";
-                        document.getElementById("CPFInput").value = "";
-                        document.getElementById("TelefoneInput").value = "";
+                        document.getElementById("cpfInput").value = "";
+                        document.getElementById("telefoneInput").value = "";
                         document.getElementById("hora_de_devolucaoInput").value = "";
                     })
                     .catch(error => {
@@ -227,14 +227,15 @@
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => {
-                    if (response.ok) {
-                        selectedRow.parentNode.removeChild(selectedRow);
-                        selectedRow = null;
-                    } else {
-                        alert('Erro ao deletar')
-                    }}
-                )
+                    .then(response => {
+                        if (response.ok) {
+                            selectedRow.parentNode.removeChild(selectedRow);
+                            selectedRow = null;
+                        } else {
+                            alert('Erro ao deletar')
+                        }
+                    }
+                    )
             } else {
                 alert("Nenhuma linha selecionada para deletar.");
             }
@@ -244,27 +245,49 @@
             if (selectedRow) {
                 var nome = document.getElementById("nomeInput").value;
                 var idade = document.getElementById("idadeInput").value;
-                var name = document.getElementById("EmailInput").value;
+                var email = document.getElementById("emailInput").value;
                 var jogo = document.getElementById("jogoInput").value;
-                var CPF = document.getElementById("CPFInput").value;
-                var Telefone = document.getElementById("TelefoneInput").value;
+                var cpf = document.getElementById("cpfInput").value;
+                var telefone = document.getElementById("telefoneInput").value;
                 var hora_de_devolucao = document.getElementById("hora_de_devolucaoInput").value; // Novo campo
 
-                if (name && age && jogo && alugando && phone) { // Verifica todos os campos
-                    selectedRow.cells[0].textContent = nome;
-                    selectedRow.cells[1].textContent = idade;
-                    selectedRow.cells[2].textContent = Email;
-                    selectedRow.cells[3].textContent = jogo;
-                    selectedRow.cells[4].textContent = CPF;
-                    selectedRow.cells[5].textContent = Telefone;
-                    selectedRow.cells[6].textContent = hora_de_devolucao; // Atualiza o novo campo
+                if (nome && idade && email && jogo && cpf && telefone && hora_de_devolucao) { // Verifica todos os campos
+                    const cliente = {
+                        nome: nome,
+                        idade: idade,
+                        email: email,
+                        jogo: jogo,
+                        cpf: cpf,
+                        telefone: telefone,
+                        hora_de_devolucao: hora_de_devolucao,
+                    };
+
+                    fetch('http://localhost:3000/clientes/' + cpf, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cliente)
+
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                selectedRow.cells[0].textContent = nome;
+                                selectedRow.cells[1].textContent = idade;
+                                selectedRow.cells[2].textContent = email;
+                                selectedRow.cells[3].textContent = jogo;
+                                selectedRow.cells[4].textContent = cpf;
+                                selectedRow.cells[5].textContent = telefone;
+                                selectedRow.cells[6].textContent = hora_de_devolucao; // Atualiza o novo campo
+                            } else {
+                                alert("Nenhuma linha selecionada para editar.");
+                            }
+                        });
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
-            } else {
-                alert("Nenhuma linha selecionada para editar.");
             }
-        });
+        })
 
         function selectRow(button) {
             // Desmarcar a linha previamente selecionada
@@ -280,11 +303,11 @@
             // Preencher os campos do formulário com os dados da linha selecionada
             document.getElementById("nomeInput").value = row.cells[0].textContent;
             document.getElementById("idadeInput").value = row.cells[1].textContent;
-            document.getElementById("EmailInput").value = row.cells[2].textContent;
-            document.getElementById("jogoInput").value = row.cells[2].textContent;
-            document.getElementById("CPFInput").value = row.cells[3].textContent;
-            document.getElementById("TelefoneInput").value = row.cells[4].textContent;
-            document.getElementById("hora_de_devolucaoInput").value = row.cells[5].textContent; // Novo campo
+            document.getElementById("emailInput").value = row.cells[2].textContent;
+            document.getElementById("jogoInput").value = row.cells[3].textContent;
+            document.getElementById("cpfInput").value = row.cells[4].textContent;
+            document.getElementById("telefoneInput").value = row.cells[5].textContent;
+            document.getElementById("hora_de_devolucaoInput").value = row.cells[6].textContent; // Novo campo
         }
 
         function goToMenu() {
@@ -302,7 +325,7 @@
                 .then(response => response.json())
                 .then(clientes => {
                     var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
-                    for(i=0; i<clientes.length; i++){
+                    for (i = 0; i < clientes.length; i++) {
                         const cliente = clientes[i]
                         var newRow = table.insertRow();
 
@@ -324,7 +347,8 @@
                         cell7.textContent = cliente.hora_de_devolucao; // Novo campo
 
                         cell8.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-                }})
+                    }
+                })
                 .catch(error => {
                     alert('Erro ao criar o cliente')
                 })
