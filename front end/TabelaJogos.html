@@ -223,17 +223,17 @@
                 fetch('http://localhost:3000/jogos/' + selectedRow.cells[0].textContent, {
                     method: 'DELETE'
                 })
-                .then(response => {
-                    if(response.ok){
-                        // Limpar temporizador se houver
-                        clearInterval(timers[selectedRow.rowIndex]);
+                    .then(response => {
+                        if (response.ok) {
+                            // Limpar temporizador se houver
+                            clearInterval(timers[selectedRow.rowIndex]);
 
-                        selectedRow.parentNode.removeChild(selectedRow);
-                        selectedRow = null;
-                    } else {
-                        alert('Não foi possível deletar')
-                    }
-                })
+                            selectedRow.parentNode.removeChild(selectedRow);
+                            selectedRow = null;
+                        } else {
+                            alert('Não foi possível deletar')
+                        }
+                    })
             } else {
                 alert("Nenhuma linha selecionada para deletar.");
             }
@@ -249,18 +249,41 @@
                 var timer = document.getElementById("timerInput").value;
 
                 if (titulo && ano_publicacao && preco && editora && alugado) {
-                    selectedRow.cells[0].textContent = titulo;
-                    selectedRow.cells[1].textContent = ano_publicacao;
-                    selectedRow.cells[2].textContent = preco;
-                    selectedRow.cells[3].textContent = editora;
-                    selectedRow.cells[4].textContent = alugado;
-                    selectedRow.cells[5].textContent = timer ? `${timer} min` : "N/A";
-
-                    // Atualizar temporizador
-                    clearInterval(timers[selectedRow.rowIndex]);
-                    if (timer) {
-                        startTimer(selectedRow, timer);
+                    const jogo = {
+                        titulo: titulo,
+                        ano_publicacao: ano_publicacao,
+                        preco: preco,
+                        editora: editora,
+                        alugado: alugado
                     }
+
+                    // Chamar o backend
+                    fetch('http://localhost:3000/jogos/' + titulo, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(jogo)
+
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                selectedRow.cells[0].textContent = titulo;
+                                selectedRow.cells[1].textContent = ano_publicacao;
+                                selectedRow.cells[2].textContent = preco;
+                                selectedRow.cells[3].textContent = editora;
+                                selectedRow.cells[4].textContent = alugado;
+                                selectedRow.cells[5].textContent = timer ? `${timer} min` : "N/A";
+
+                                // Atualizar temporizador
+                                clearInterval(timers[selectedRow.rowIndex]);
+                                if (timer) {
+                                    startTimer(selectedRow, timer);
+                                }
+                            } else {
+                                alert('deu erro')
+                            }
+                        })
                 } else {
                     alert("Por favor, preencha todos os campos.");
                 }
@@ -321,7 +344,7 @@
                 .then(response => response.json())
                 .then(jogoss => {
                     var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
-                    for(i=0; i<jogoss.length; i++){
+                    for (i = 0; i < jogoss.length; i++) {
                         const jogos = jogoss[i]
                         var newRow = table.insertRow();
 
@@ -339,10 +362,11 @@
                         cell4.textContent = jogos.editora;
                         cell5.textContent = jogos.alugados;
                         cell6.textContent = jogos.timer;
-                        
+
 
                         cell7.innerHTML = '<button onclick="selectRow(this)">Selecionar</button>';
-                }})
+                    }
+                })
                 .catch(error => {
                     alert('Erro ao criar o jogos')
                 })

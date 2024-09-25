@@ -33,7 +33,11 @@ const jogosController = {
 
     updateJogo: async (req, res) => {
         try {
-            const jogos = await Jogos.findByPk(req.params.id);
+            const jogos = await Jogos.findOne({
+                where: {
+                    titulo: req.params.titulo
+                }
+            })
             if (!jogos) {
                 return res.status(404).send('jogos não encontrado');
             }
@@ -47,8 +51,8 @@ const jogosController = {
     deleteJogo: async (req, res) => {
         try {
             const jogos = await Jogos.findOne({
-                where:{
-                    titulo:req.params.titulo
+                where: {
+                    titulo: req.params.titulo
                 }
             });
             if (!jogos) {
