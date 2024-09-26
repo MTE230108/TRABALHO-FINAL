@@ -12,7 +12,7 @@ router.get('/Jogos', JogoController.getAllJogos);
 router.get('/Jogos/:id', JogoController.getJogoById);
 
 // Rota para atualizar um Jogo
-router.put('/Jogos/:id', JogoController.updateJogo);
+router.put('/Jogos/:titulo', JogoController.updateJogo);
 
 // Rota para deletar um Jogo
 router.delete('/Jogos/:titulo', JogoController.deleteJogo);
