@@ -16,7 +16,7 @@ const sequelize = require("../config/database");
             type: DataTypes.DECIMAL
         }, 
         validade:{
-            type: DataTypes.DATE
+            type: DataTypes.DECIMAL
         },
         quantidade:{
             type: DataTypes.INTEGER

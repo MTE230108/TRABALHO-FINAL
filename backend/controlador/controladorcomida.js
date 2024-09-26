@@ -33,7 +33,11 @@ const comidasController = {
 
     updatecomidas: async (req, res) => {
         try {
-            const comidas = await Comidas.findByPk(req.params.id);
+            const comidas = await Comidas.findOne({
+                where: {
+                    nome: req.params.nome
+                }    
+            });
             if (!comidas) {
                 return res.status(404).send('comidas não encontrado');
             }

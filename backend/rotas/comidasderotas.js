@@ -12,7 +12,7 @@ router.get('/comidas', comidasController.getAllcomidas);
 router.get('/comidas/:id', comidasController.getcomidasById);
 
 // Rota para atualizar um comidas
-router.put('/comidas/:id', comidasController.updatecomidas);
+router.put('/comidas/:nome', comidasController.updatecomidas);
 
 // Rota para deletar um comidas
 router.delete('/comidas/:nome', comidasController.deletecomidas);
