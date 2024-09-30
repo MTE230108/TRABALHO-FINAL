@@ -22,7 +22,7 @@ const sequelize = require("../config/database");
             type: DataTypes.STRING
         },
         alugados:{
-            type: DataTypes.TINYINT
+            type: DataTypes.STRING
         }
         
         
